@@ -4,3 +4,6 @@ Now that you have your workspace set up, what do you want to try using Git for?
 What happens when you initialize a repository? Why do you need to do it?
 -new git repository on my comp is created, I need it to work with projects on my comp.
 
+How is the staging area different from the working directory and the repository? What value do you think it offers?
+-SA "collects" files added one by one and lets it send to the Repository in user's defined sets - it enables controlled flow of files from WD to Repository.
+
