@@ -1,0 +1,6 @@
+Now that you have your workspace set up, what do you want to try using Git for?
+-to create projects, first: to finish DrzemlikGame 
+
+What happens when you initialize a repository? Why do you need to do it?
+-new git repository on my comp is created, I need it to work with projects on my comp.
+
