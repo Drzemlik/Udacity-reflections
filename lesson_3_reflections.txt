@@ -8,3 +8,6 @@ Describe the differences between forks, clones, and branches. When would you use
 -forks: copy others' repository to my github account; used within remote
 -clones: copies a repository's content from remote to local, or within local only; used in remote-local or local-local 
 -branches: versions of a file; used to create/work with new versions of a file
+
+What is the benefit of having a copy of the last known state of the remote stored locally?
+-it simplifies the workflow, for it enables a few users making updates independently and then merging them into final version in a clean, ordered way (any conflicts are resolved easily)
