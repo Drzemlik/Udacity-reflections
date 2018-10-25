@@ -8,7 +8,7 @@ How is the staging area different from the working directory and the repository?
 -SA "collects" files added one by one and lets it send to the Repository in user's defined sets - it enables controlled flow of files from WD to Repository.
 
 How can you use the staging area to make sure you have one commit per logical change?
--you can stage every logical change and commit it with adequate title
+-you can stage every logical change and commit it with adequate type:subject, body and footer.
 
 What are some situations when branches would be helpful in keeping your history organized? How would branches help?
 -when ones wants to keep the original version untouched while working on experimental version. Branches help as one can name new version, work on it and commit it without changing the original version. One can also go back to the original version if needed.
@@ -16,7 +16,9 @@ What are some situations when branches would be helpful in keeping your history 
 How do the diagrams help you visualize the branch structure?
 -they show parent-child correlations between commits.
 
- What is the result of merging two branches together? Why do we represent it in the diagram the way we do?
+What is the result of merging two branches together? Why do we represent it in the diagram the way we do?
+The result is one branch that combines commits of two merging branches (that thus become its parents). 
+The diagram depicts the fact, that merging includes all of both branches' histories (commits of the branches with parent-child relation).
 
 What are the pros and cons of Git’s automatic merging vs. always doing merges manually?
 
