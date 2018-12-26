@@ -25,3 +25,199 @@ How can you use the commands git log and git diff to view the history of files?
 
 How might using version control make you more confident to make changes that could break something?
 -it enables finding last working version and restoring it easily
+
+OverviewEU
+
+Public Sub OrdinaryButton_Click() 'RD
+
+    Call cPasteToHPE
+    Call pasteSNDtoTemp
+    Call add_zeros
+    
+End Sub
+
+
+RD_CopyTempToHPE
+
+Option Explicit
+
+    Dim shRange1 As String
+    Dim shRange2 As String
+    Dim shRange3 As String
+    Dim wrk As Workbook
+    Dim inx As Integer
+  
+    
+Public Sub cPasteToHPE()
+
+    For inx = 2 To 6
+    
+        chooseInx
+        
+        ThisWorkbook.Worksheets(inx).Range(shRange1).Copy
+             
+        findOpenHPE
+        
+        Worksheets(inx).Range(shRange1).PasteSpecial Paste:=xlPasteValues
+            
+        ThisWorkbook.Worksheets(inx).Range(shRange2).Copy
+        
+        findOpenHPE
+        
+        pasteShRange3
+        
+    
+    Next inx
+    
+    
+End Sub
+
+Function chooseInx()
+
+    Select Case inx
+               
+        Case 2:
+            shRange1 = "C6:S17"
+            shRange2 = "C24:D27"
+            shRange3 = "C24"
+            
+        Case 3:
+            shRange1 = "C6:W14"
+            shRange2 = "C21:D23"
+            shRange3 = "C21"
+            
+        Case 4:
+            shRange1 = "C6:S14"
+            shRange2 = "C21:D23"
+            shRange3 = "C21"
+            
+        Case 5:
+            shRange1 = "C6:S14"
+            shRange2 = "C21:D23"
+            shRange3 = "C21"
+            
+        Case 6:
+            shRange1 = "C6:U14"
+            shRange2 = "C21:D23"
+            shRange3 = "C21"
+            
+    End Select
+    
+End Function
+Function pasteShRange3()
+
+    If Not IsEmpty(Worksheets(inx).Range(shRange3).Offset(, 8)) Then
+    
+        Worksheets(inx).Range(shRange3).PasteSpecial Paste:=xlPasteValues
+        Worksheets(inx).Range(shRange3).Offset(, 2).Select
+        Worksheets(inx).Range(Selection, Cells(Selection.End(xlDown).row, Selection.End(xlToRight).Column)).ClearContents
+        
+        Exit Function
+            
+    ElseIf Not IsEmpty(Worksheets(inx).Range(shRange3)) Then
+    
+        Worksheets(inx).Range(shRange3).End(xlToRight).Offset(, 1).PasteSpecial Paste:=xlPasteValues
+                
+    Else
+    
+        Worksheets(inx).Range(shRange3).PasteSpecial Paste:=xlPasteValues
+        
+    End If
+    
+End Function
+Function findOpenHPE()
+    For Each wrk In Workbooks
+        If InStr(wrk.Name, "HPE_Dashboard") > 0 Then
+            wrk.Worksheets(inx).Activate
+            Exit For
+        End If
+    Next
+End Function
+
+
+RD_SNDtoOverview_addZeros
+
+Option Explicit
+
+Dim wrk, SNDreport As Workbook
+Dim lastCell1, lastCell2, noD1cell, cell As Range
+Dim lastRow, k As Long
+
+
+Public Sub pasteSNDtoTemp()
+    
+Set lastCell1 = ThisWorkbook.Worksheets("Overdue_PIDs_list").Range("B2").End(xlDown).Offset(1, 0)
+Set lastCell2 = ThisWorkbook.Worksheets("Overdue_PIDs_list").Range("L2").End(xlDown).Offset(1, 0)
+Set noD1cell = ThisWorkbook.Worksheets("Overdue_PIDs_list").Range("B2").End(xlDown).Offset(1, 7)
+    
+    ThisWorkbook.Worksheets("Overdue_PIDs_list").Activate
+    
+    noD1cell.Value = "no D1 status"
+    noD1cell.Offset(0, 1).Value = "no D1 status"
+    noD1cell.Offset(0, 2).Value = "Unknown"
+    noD1cell.Offset(0, 4).Value = "Pending confirmation"
+    
+    findSNDreport
+    removeFRGBIEMa
+    
+    Worksheets(1).Range(Worksheets(1).Range("A2"), Worksheets(1).Range("A2").End(xlDown)).Copy
+    ThisWorkbook.Worksheets("Overdue_PIDs_list").Activate
+    lastCell1.PasteSpecial Paste:=xlPasteValues
+    
+    findSNDreport
+    Worksheets(1).Range(Worksheets(1).Range("J2"), Worksheets(1).Range("J2").End(xlDown)).Copy
+    ThisWorkbook.Worksheets("Overdue_PIDs_list").Activate
+    lastCell2.PasteSpecial Paste:=xlPasteValues
+    
+    'Range("a2").CurrentRegion.Copy
+    'Call findOpenHPE
+    
+    'lastRow = Range("L" & Rows.Count).End(xlUp).row
+    'Range("I2").End(xlDown).Select
+    'SelectedArea = Selection.Resize(Selection.Rows.Count + lastRow, Selection.Columns.Count + 1).Select
+    'SelectedArea.AutoFill Destination:=Range(Selection & ":I" & lastRow)
+
+
+End Sub
+
+
+Function findSNDreport()
+    For Each wrk In Workbooks
+        If InStr(wrk.Name, "Zeszyt") > 0 Then
+            wrk.Worksheets(1).Activate
+            Exit For
+        End If
+    Next
+End Function
+
+Function removeFRGBIEMa()
+
+Dim i As Integer
+Dim CO(1 To 6) As String
+    
+    CO(1) = "FR"
+    CO(2) = "GB"
+    CO(3) = "IE"
+    CO(4) = "DZ"
+    CO(5) = "MA"
+    CO(6) = "TN"
+    
+ 'ActiveWorkbook.ActiveSheet.Range("J").End(xlDown).NumberFormat = "@"
+
+    For i = 1 To 6
+        k = 1
+        
+        Do While k <= ActiveWorkbook.ActiveSheet.Range("A2").CurrentRegion.Rows.Count
+    
+            If InStr(4, ActiveWorkbook.ActiveSheet.Cells(k, 10).Text, CO(i), vbTextCompare) > 0 Then
+                ActiveWorkbook.ActiveSheet.Cells(k, 10).EntireRow.Delete
+            Else
+                k = k + 1
+            End If
+    
+        Loop
+    
+    Next i
+    
+End Function
+
