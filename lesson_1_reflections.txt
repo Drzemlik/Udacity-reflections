@@ -25,3 +25,39 @@ How can you use the commands git log and git diff to view the history of files?
 
 How might using version control make you more confident to make changes that could break something?
 -it enables finding last working version and restoring it easily
+
+Option Explicit
+
+Public Sub HPInc_TATcharts()
+
+Dim wrk As Workbook
+Dim sourceSh As Worksheet
+Dim sGrLanesCell As Range
+Dim TATShNameString, WeekNo As String
+Dim i, j As Integer
+Dim lastrow As Long
+Dim userValue As Variant
+
+
+    If Not findOpenSource_HPInc Is Nothing Then
+    
+        findOpenSource_HPInc
+        
+    ElseIf findOpenSource_HPInc Is Nothing Then
+        MsgBox "Please open file for the week in question and with the name 'HPI_source_[..]'. Once open, restart the macro."
+        Exit Sub
+        
+    End If
+
+    i = 2
+    Do While ActiveSheet.Cells(i, 1).Value <> ""
+        Cells(i, 1).NumberFormat = "@"
+        i = i + 1
+    Loop
+       
+findOpenTATcharts_HPInc
+
+userValue = InputBox("Input date in the format of: YYYY_MM", "Date to be filled", ActiveWorkbook. _
+    Worksheets(2).Cells(26, 11).Value) 'RD
+Set sourceSh = Workbooks("HPI_source_" & Right(userValue, 2) & ".xlsx").Worksheets("overall") 'RD
+Set sGrLanesCell = sourceSh.Range(sourceSh.Range("A1"), sourceSh.Range("A1").End(xlDown)).Offset(1, 0)
